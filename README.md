@@ -1,2 +1,2 @@
-# Redbow-News
+# Redbox-News
  Student project

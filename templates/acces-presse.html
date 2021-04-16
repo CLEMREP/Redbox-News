@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Redbox - Connexion</title>
+    <link rel="stylesheet" href="../static/assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+    <link rel="stylesheet" href="../static/assets/fonts/fontawesome-all.min.css">
+    <link rel="stylesheet" href="../static/assets/fonts/simple-line-icons.min.css">
+    <link rel="stylesheet" href="../static/css/styles.css">
+    <link rel="icon" href="../static/assets/img/favicon.ico" />
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-xxl-2">
+                <div class="navigation">
+                    <img src="../static/assets/img/Redbox%20White.svg">
+                    <h1>La référence des sites d'actualités.</h1>
+    
+                    <ul>
+                        <li><a href="/"><i class="icon-home icon"></i>Les actualités</a></li>
+                        <li><a href="a-propos-de-nous"><i class="far fa-user icon"></i>Qui sommes-nous ?</a></li>
+                        <li class="active"><a href=""><i class="far fa-folder icon"></i>Accès presse</a></li>
+                    </ul>
+					<p class="footer">Copyright © 2021 Redbox-News.com.</p> 
+                </div>   
+   
+            </div>
+            <div class="col-md-6 col-xxl-9">
+                <div class="presse">
+					<section>
+                        <h1>Accès Presse</h1>
+                        {% with messages = get_flashed_messages() %}
+                            {% if messages %}
+                                <ul class="flash_message">
+                                {% for message in messages %}
+                                    <li>{{ message }}</li>
+                                {% endfor %}
+                                </ul>
+                            {% endif %}
+                        {% endwith %}
+                        <form method="POST">
+                            <input type="text" name="email" placeholder="Courriel électronique" class="bold">
+                            <input type="password" name="password" placeholder="Mot de passe" class="bold">
+
+                            <button type="submit" id="connexion" class="bouton">Connexion</button>
+                            <button id="creer" class="bouton"><a href="demande-presse">Créer un accès</a></button>
+                        </form>
+					</section>
+                </div>
+            </div>
+        <div>
+    </div>
+    <script src="../static/assets/bootstrap/js/bootstrap.min.js"></script>
+</body>
+
+</html>

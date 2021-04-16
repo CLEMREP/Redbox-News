@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Redbox - Mon compte</title>
+    <link rel="stylesheet" href="../../static/assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+    <link rel="stylesheet" href="../../static/assets/fonts/fontawesome-all.min.css">
+    <link rel="stylesheet" href="../../static/assets/fonts/simple-line-icons.min.css">
+    <link rel="stylesheet" href="../../static/css/styles_presse.css">
+    <link rel="icon" href="../../static/assets/img/favicon_dark.ico" />
+</head>
+
+<body>
+    <div class="main-box">
+        <div class="navigation">
+            <a href="/"><img src="../../static/assets/img/Redbox White.svg"></a>
+            <ul>
+                <li><a href="/presse"><i class="icon-home icon"></i>Menu</a></li>
+                <li><a href="mes-articles"><i class="far fa-copy icon"></i>Mes articles</a></li>
+				<li><a href="publier-article"><i class="far fa-edit"></i>Publier un article</a></li>
+                <li class="active"><a href=""><i class="fas fa-user-cog"></i>Mon compte</a></li>
+            </ul>
+            <div class="footer-logout">
+                <a href="/logout"><i class="fas fa-sign-out-alt"></i>Déconnexion</a>
+                <p>Copyright © 2021 Redbox-News.com.</p> 
+            </div>
+        </div>
+		<div class="stats">
+            <div class="presse">
+                <section>
+                    <h1>Mon compte</h1>
+                    {% with messages = get_flashed_messages() %}
+                            {% if messages %}
+                                <ul class="flash_message">
+                                {% for message in messages %}
+                                    <li>{{ message }}</li>
+                                {% endfor %}
+                                </ul>
+                            {% endif %}
+                    {% endwith %}
+                    <form method="POST">
+                        <input type="text" name="new_email" value="{{ informations[3] }}" placeholder="Courriel électronique">
+                        <input type="password" name="new_password" value="{{ informations[4] }}" placeholder="Nouveau mot de passe">
+
+                        <button type="submit" id="Modifier" class="bouton">Modifier</button>
+        
+                    </form>
+                </section>
+            </div>
+		</div>
+    </div>
+    <script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Redbox - Accès presse</title>
+    <link rel="stylesheet" href="../../static/assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+    <link rel="stylesheet" href="../../static/assets/fonts/fontawesome-all.min.css">
+    <link rel="stylesheet" href="../../static/assets/fonts/simple-line-icons.min.css">
+    <link rel="stylesheet" href="../../static/css/styles_presse.css">
+    <link rel="icon" href="../../static/assets/img/favicon_dark.ico" />
+</head>
+
+<body>
+    <div class="main-box">
+        <div class="navigation">
+            <a href="/"><img src="../../static/assets/img/Redbox White.svg"></a>
+            <ul>
+                <li class="active"><a href=""><i class="icon-home icon"></i>Menu</a></li>
+                <li><a href="mes-articles"><i class="far fa-copy icon"></i>Mes articles</a></li>
+				<li><a href="publier-article"><i class="far fa-edit"></i>Publier un article</a></li>
+                <li><a href="mon-compte"><i class="fas fa-user-cog"></i>Mon compte</a></li>
+            </ul>
+            <div class="footer-logout">
+                <a href="/logout"><i class="fas fa-sign-out-alt"></i>Déconnexion</a>
+                <p>Copyright © 2021 Redbox-News.com.</p> 
+            </div>
+        </div>
+        <div class="stats">
+            <div class="contain-stats">
+                <section>
+                    <i class="fas fa-search"></i>
+                    <span class="name">Article total</span>
+                    <span class="number">{{ nbArticle }}</span>
+                </section>
+
+                <section>
+                    <i class="far fa-copy"></i>
+                    <span class="name">Mes articles</span>
+                    <span class="number">{{ nbArticlePublie }}</span>
+                </section>
+
+                <section>
+                    <i class="far fa-user"></i>
+                    <span class="name">Bonjour,</span>
+                    <span class="profil-name">{{ pseudo }}</span>
+                </section>
+            </div>
+        </div>
+    </div>
+    <script src="../../static/assets/bootstrap/js/bootstrap.min.js"></script>
+</body>
+
+</html>

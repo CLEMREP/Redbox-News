@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Redbox - News</title>
+    <link rel="stylesheet" href="../static/assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+    <link rel="stylesheet" href="../static/assets/fonts/fontawesome-all.min.css">
+    <link rel="stylesheet" href="../static/assets/fonts/simple-line-icons.min.css">
+    <link rel="stylesheet" href="../static/css/styles.css">
+    <link rel="icon" href="../static/assets/img/favicon.ico" />
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-xxl-2">
+                <div class="navigation">
+                    <img src="../static/assets/img/Redbox%20White.svg">
+                    <h1>La référence des sites d'actualités.</h1>
+                    <ul>
+                        <li class="active"><a href=""><i class="icon-home icon"></i>Les actualités</a></li>
+                        <li><a href="a-propos-de-nous"><i class="far fa-user icon"></i>Qui sommes-nous ?</a></li>
+                        <li><a href="presse"><i class="far fa-folder icon"></i>Accès presse</a></li>
+                    </ul>
+					<p class="footer">Copyright © 2021 Redbox-News.com.</p> 
+                </div>   
+            </div>
+            <div class="col-md-6 col-xxl-9">
+                <div class="article">
+					<section>
+                        <a href="actualites/nicolas_sarkozy.html">
+                            <img src="../static/assets/img/nicolas_sarkozy.jpg">
+                            <div class="article-info">
+                                <h1>Condamné à trois ans de prison, Nicolas Sarkozy dénonce une « injustice »</h1>
+                                <p><i class="far fa-clock"></i>Publié le 02.03.21</p>
+                            </div>
+                        </a>
+					</section>
+
+                    {% for article in articles %}
+                    <section>
+                        <a href="actualites/{{ article[2] }}">
+                            <img src="{{ article[4] }}">
+                            <div class="article-info">
+                                <h1>{{ article[2] }}</h1>
+                                <p><i class="far fa-clock"></i>Publié le {{ article[5] }}.</p>
+                            </div>
+                        </a>
+					</section>
+                    {% endfor %}
+                </div>
+            </div>
+        <div>
+    </div>
+    <script src="../static/assets/bootstrap/js/bootstrap.min.js"></script>
+</body>
+
+</html>

@@ -1,7 +1,6 @@
 import sqlite3, os
 
 from flask import Flask, render_template, redirect, flash, request, url_for, session
-from string import printable
 from datetime import *
 from verifFormPresse import *
 

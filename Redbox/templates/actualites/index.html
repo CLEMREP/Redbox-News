@@ -24,8 +24,8 @@
     
                     <ul>
                         <li><a href="/"><i class="icon-home icon"></i>Les actualités</a></li>
-                        <li><a href="../a-propos-de-nous"><i class="far fa-user icon"></i>Qui sommes-nous ?</a></li>
-                        <li><a href="../presse"><i class="far fa-folder icon"></i>Accès presse</a></li>
+                        <li><a href="/a-propos-de-nous"><i class="far fa-user icon"></i>Qui sommes-nous ?</a></li>
+                        <li><a href="{{ url_for('authentification.acces_presse') }}"><i class="far fa-folder icon"></i>Accès presse</a></li>
                     </ul>
 					<p class="footer">Copyright © 2021 Redbox-News.com.</p> 
                 </div>   
@@ -37,7 +37,7 @@
                         <img src="../../{{ info[4] }}">
                         <div class="decouverte-info">
                             <h1>{{ info[2] }}</h1>
-                            <h2>{{ info[3] }}</h2>
+                            <h2>{% autoescape false %}{{ info[3] | replace("\\n", "<br>") | replace("\\r", "<br>") }} {% endautoescape %}</h2>
                             <p class="date"><i class="far fa-clock"></i>Publié le {{ info[5] }}</p>
                             <p class="date"><i class="far fa-clock"></i>Écrit par {{ journaliste }}</p>
                         </div>

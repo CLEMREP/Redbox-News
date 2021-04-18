@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Redbox - Demande d'accès</title>
+    <title>Redbox - Connexion</title>
     <link rel="stylesheet" href="../static/assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
     <link rel="stylesheet" href="../static/assets/fonts/fontawesome-all.min.css">
@@ -23,8 +23,8 @@
     
                     <ul>
                         <li><a href="/"><i class="icon-home icon"></i>Les actualités</a></li>
-                        <li><a href="a-propos-de-nous"><i class="far fa-user icon"></i>Qui sommes-nous ?</a></li>
-                        <li class="active"><a href="acces-presse"><i class="far fa-folder icon"></i>Accès presse</a></li>
+                        <li><a href="{{ url_for('views.a_propos_de_nous') }}"><i class="far fa-user icon"></i>Qui sommes-nous ?</a></li>
+                        <li class="active"><a href=""><i class="far fa-folder icon"></i>Accès presse</a></li>
                     </ul>
 					<p class="footer">Copyright © 2021 Redbox-News.com.</p> 
                 </div>   
@@ -44,15 +44,11 @@
                             {% endif %}
                         {% endwith %}
                         <form method="POST">
-                            <input type="text" id="input_g" name="nom" placeholder="Nom">
-                            <input type="text" id="input_d" name="prenom" placeholder="Prénom">
-                            <input type="tel" id="input_g" name="telephone" placeholder="Téléphone">
-                            <input type="text" id="input_d" name="ville" placeholder="Ville">
-                            <input type="email" name="email_inscription" placeholder="Courriel électronique">
-                            <input type="password" id="input_g" name="password_inscription" placeholder="Mot de passe">
-                            <input type="password" id="input_d" name="confirm_password" placeholder="Confirmation du mot de passe">
+                            <input type="text" name="email" placeholder="Courriel électronique" class="bold">
+                            <input type="password" name="password" placeholder="Mot de passe" class="bold">
 
-                            <button type="submit" id="creer_acces" class="bouton">Créer un accès</button>
+                            <button type="submit" id="connexion" class="bouton">Connexion</button>
+                            <button id="creer" class="bouton"><a href="{{ url_for('authentification.demande_presse') }}">Créer un accès</a></button>
                         </form>
 					</section>
                 </div>

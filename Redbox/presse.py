@@ -26,21 +26,26 @@ def home():
         if "email" in session:
             email = session["email"]
 
-            cursor.execute(f"SELECT COUNT(id) FROM article")
-            nbArticle = cursor.fetchone()
+            try:
 
-            cursor.execute(f"SELECT prenom, nom FROM journaliste WHERE email = ( {repr(email)} );")
-            pseudo = cursor.fetchone()
+                cursor.execute(f"SELECT COUNT(id) FROM article")
+                nbArticle = cursor.fetchone()
 
-            cursor.execute(f"SELECT id FROM journaliste WHERE email = ({ repr(email) });")
-            identifiant = cursor.fetchone()
+                cursor.execute(f"SELECT prenom, nom FROM journaliste WHERE email = ( {repr(email)} );")
+                pseudo = cursor.fetchone()
 
-            cursor.execute(f"SELECT COUNT(id) FROM article WHERE id_journaliste = ({ repr(identifiant[0]) });")
-            nbArticlePublie = cursor.fetchone()
+                cursor.execute(f"SELECT id FROM journaliste WHERE email = ({ repr(email) });")
+                identifiant = cursor.fetchone()
 
-            connexion.commit()
+                cursor.execute(f"SELECT COUNT(id) FROM article WHERE id_journaliste = ({ repr(identifiant[0]) });")
+                nbArticlePublie = cursor.fetchone()
 
-            return render_template("presse/index.html", pseudo=" ".join(pseudo), nbArticle=nbArticle[0], nbArticlePublie=nbArticlePublie[0])
+                connexion.commit()
+
+                return render_template("presse/index.html", pseudo=" ".join(pseudo), nbArticle=nbArticle[0], nbArticlePublie=nbArticlePublie[0])
+
+            except:
+                return redirect(url_for('authentification.acces_presse'))
 
         else:
             return redirect(url_for('authentification.acces_presse'))

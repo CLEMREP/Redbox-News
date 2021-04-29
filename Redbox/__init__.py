@@ -13,6 +13,9 @@ def create_app(test_config=None):
         PERMANENT_SESSION_LIFETIME = timedelta(days=30),
     )
 
+    if not os.path.isfile("redbox.db"):
+        raise IOError("File : redbox.db not found")
+
     @app.errorhandler(404)
     def page_not_found(e):
         return render_template("404.html"), 404

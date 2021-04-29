@@ -26,26 +26,21 @@ def home():
         if "email" in session:
             email = session["email"]
 
-            try:
+            cursor.execute(f"SELECT COUNT(id) FROM article")
+            nbArticle = cursor.fetchone()
 
-                cursor.execute(f"SELECT COUNT(id) FROM article")
-                nbArticle = cursor.fetchone()
+            cursor.execute(f"SELECT prenom, nom FROM journaliste WHERE email = ( {repr(email)} );")
+            pseudo = cursor.fetchone()
 
-                cursor.execute(f"SELECT prenom, nom FROM journaliste WHERE email = ( {repr(email)} );")
-                pseudo = cursor.fetchone()
+            cursor.execute(f"SELECT id FROM journaliste WHERE email = ({ repr(email) });")
+            identifiant = cursor.fetchone()
 
-                cursor.execute(f"SELECT id FROM journaliste WHERE email = ({ repr(email) });")
-                identifiant = cursor.fetchone()
+            cursor.execute(f"SELECT COUNT(id) FROM article WHERE id_journaliste = ({ repr(identifiant[0]) });")
+            nbArticlePublie = cursor.fetchone()
 
-                cursor.execute(f"SELECT COUNT(id) FROM article WHERE id_journaliste = ({ repr(identifiant[0]) });")
-                nbArticlePublie = cursor.fetchone()
+            connexion.commit()
 
-                connexion.commit()
-
-                return render_template("presse/index.html", pseudo=" ".join(pseudo), nbArticle=nbArticle[0], nbArticlePublie=nbArticlePublie[0])
-
-            except:
-                return redirect(url_for('authentification.acces_presse'))
+            return render_template("presse/index.html", pseudo=" ".join(pseudo), nbArticle=nbArticle[0], nbArticlePublie=nbArticlePublie[0])
 
         else:
             return redirect(url_for('authentification.acces_presse'))
@@ -95,6 +90,7 @@ def publier_articles():
                 image = request.files["file"]
 
                 creation_date = str(datetime.now().strftime("%d/%m/%Y à %Hh%M"))
+                url = titre.replace(" ", "_").lower()
 
                 if titre == "" or texte == "":
                     flash("Merci de remplir tous les champs.")
@@ -113,7 +109,7 @@ def publier_articles():
                 try:
                     cursor.execute(f"SELECT id FROM journaliste WHERE email = ({ repr(email) });")
                     identifiant = cursor.fetchone()
-                    cursor.execute(f"INSERT INTO article (id_journaliste, titre, texte, lien, date_publication) VALUES ({ repr(identifiant[0]) }, { repr(titre) }, { repr(texte) }, { repr(lien_image) }, { repr(creation_date) } );")
+                    cursor.execute(f"INSERT INTO article (id_journaliste, titre, texte, lien, url, date_publication) VALUES ({ repr(identifiant[0]) }, { repr(titre) }, { repr(texte) }, { repr(lien_image) }, { repr(url) }, { repr(creation_date) } );")
                     connexion.commit()
 
                 except:
@@ -234,7 +230,7 @@ def mon_compte():
                     else:
                         connexion.close()
                         flash("Le compte a bien été modifié.")
-                        return redirect(url_for('presse.mon_compte'))
+                        return redirect(url_for('authentification.logout'))
 
     else:
         return redirect(url_for('authentification.acces_presse'))

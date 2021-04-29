@@ -19,7 +19,7 @@
         <div class="row">
             <div class="col-md-6 col-xxl-2">
                 <div class="navigation">
-                    <img src="../../static/assets/img/Redbox%20White.svg">
+                    <img src="../../static/assets/img/Redbox_White.svg">
                     <h1>La référence des sites d'actualités.</h1>
     
                     <ul>
@@ -38,8 +38,8 @@
                         <div class="decouverte-info">
                             <h1>{{ info[2] }}</h1>
                             <h2>{% autoescape false %}{{ info[3] | replace("\\n", "<br>") | replace("\\r", "<br>") }} {% endautoescape %}</h2>
-                            <p class="date"><i class="far fa-clock"></i>Publié le {{ info[5] }}</p>
-                            <p class="date"><i class="far fa-clock"></i>Écrit par {{ journaliste }}</p>
+                            <p class="date"><i class="far fa-clock"></i>Publié le {{ info[6] }}.</p>
+                            <p class="date"><i class="far fa-clock"></i>Écrit par {{ journaliste }}.</p>
                         </div>
                 </section>
                 </div>

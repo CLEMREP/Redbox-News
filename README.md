@@ -1,5 +1,13 @@
 # Redbox-News
  Student project
 
-Install:
-python3 -m pip install -r requirements.txt
+Install on Windows:
+
+python -m pip install -r requirements.txt
+
+Open cmd in folder:
+
+SET FLASK_APP=.
+SET FLASK_ENV=development
+
+python -m flask run

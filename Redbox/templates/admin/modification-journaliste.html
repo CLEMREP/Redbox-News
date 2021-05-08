@@ -18,8 +18,9 @@
         <div class="navigation">
             <a href="/"><img src="../../static/assets/img/Redbox_White.svg"></a>
             <ul>
-                <li><a href="/admin"><i class="far fa-copy icon"></i>Journalistes</a></li>
-                <li><a href="/admin/articles.html"><i class="far fa-copy icon"></i>Articles</a></li>
+                <li><a href="/admin"><i class="fas fa-users"></i>Journalistes</a></li>
+                <li><a href="{{ url_for('admin.articles') }}"><i class="far fa-copy icon"></i>Articles</a></li>
+                <li><a href="{{ url_for('presse.home') }}"><i class="far fa-folder icon"></i>Accès presse</a></li>
             </ul>
             <div class="footer-logout">
                 <a href="/logout"><i class="fas fa-sign-out-alt"></i>Déconnexion</a>

@@ -10,6 +10,7 @@ from flask import render_template
 from flask import request
 from flask import session
 from flask import url_for
+from werkzeug.security import generate_password_hash
 
 bp = Blueprint("admin", __name__, url_prefix="/admin")
 
@@ -70,7 +71,7 @@ def modification_journaliste(id):
                     new_admin = request.form["admin"]
 
                     try:
-                        cursor.execute(f"UPDATE journaliste SET prenom = { repr(new_prenom) }, nom = { repr(new_nom) }, email = { repr(new_email) }, password = { repr(new_password) }, admin = { repr(new_admin) }, telephone = { repr(new_tel) }, ville = { repr(new_ville) } WHERE id = { repr(id) };")
+                        cursor.execute(f"UPDATE journaliste SET prenom = { repr(new_prenom) }, nom = { repr(new_nom) }, email = { repr(new_email) }, password = { repr(generate_password_hash(new_password)) }, admin = { repr(new_admin) }, telephone = { repr(new_tel) }, ville = { repr(new_ville) } WHERE id = { repr(id) };")
                         connexion.commit()
 
                     except:

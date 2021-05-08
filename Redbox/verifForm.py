@@ -1,4 +1,5 @@
 import re
+from werkzeug.security import generate_password_hash, check_password_hash
 
 def validateFormConnexion(email, password, cursor):
     error = ""
@@ -7,9 +8,9 @@ def validateFormConnexion(email, password, cursor):
         error += "Merci de remplir tous les champs."
 
     if not error:
-        cursor.execute(f"SELECT password FROM journaliste WHERE password = ({ repr(password) })")
-        elt = str(cursor.fetchone()).replace("',)", "").replace("('", "")
-        if elt != password:
+        cursor.execute(f"SELECT password FROM journaliste WHERE email = ({ repr(email) })")
+        pswd = str(cursor.fetchone()).replace("',)", "").replace("('", "")
+        if check_password_hash(pswd, password) is not True:
             error += "Email / Mot de passe incorrect."
 
     if not error:

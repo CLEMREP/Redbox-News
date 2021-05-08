@@ -10,13 +10,14 @@ from flask import render_template
 from flask import request
 from flask import session
 from flask import url_for
+from werkzeug.security import generate_password_hash
 
 from Redbox.verifForm import validateFormConnexion, validateForm
 
 
 bp = Blueprint("authentification", __name__, url_prefix="/authentification")
 
-@bp.route('/acces-presse', methods=('GET', 'POST'))
+@bp.route('/acces-presse', methods=["POST", "GET"])
 def acces_presse():            
     try:
         connexion = sqlite3.connect(current_app.config["DATABASE"])
@@ -53,7 +54,7 @@ def acces_presse():
 
     return render_template("authentification/acces-presse.html")
 
-@bp.route("/demande-presse", methods=('GET', 'POST'))
+@bp.route("/demande-presse", methods=["POST", "GET"])
 def demande_presse():
     try:
         connexion = sqlite3.connect(current_app.config["DATABASE"])
@@ -83,7 +84,9 @@ def demande_presse():
 
             else:
                 try:
-                    cursor.execute(f"INSERT INTO journaliste (prenom, nom, email, password, admin, telephone, ville, date_creation) VALUES ({ repr(prenom) }, { repr(nom) }, { repr(email) }, { repr(password) },{ repr(admin) }, { repr(telephone) }, { repr(ville) }, { repr(creation_date) });")
+                    pswd = generate_password_hash(password)
+                    
+                    cursor.execute(f"INSERT INTO journaliste (prenom, nom, email, password, admin, telephone, ville, date_creation) VALUES ({ repr(prenom) }, { repr(nom) }, { repr(email) }, { repr(pswd) }, { repr(admin) }, { repr(telephone) }, { repr(ville) }, { repr(creation_date) });")
                     connexion.commit()
 
                 except:

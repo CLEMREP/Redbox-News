@@ -11,6 +11,8 @@ from flask import request
 from flask import session
 from flask import url_for
 
+from werkzeug.security import generate_password_hash, check_password_hash
+
 bp = Blueprint("presse", __name__, url_prefix="/presse")
 
 @bp.route("/", methods=["POST", "GET"])
@@ -246,7 +248,7 @@ def mon_compte():
                         cursor.execute(f"SELECT id FROM journaliste WHERE email = ({ repr(email) });")
                         identifiant = cursor.fetchone()
                         
-                        cursor.execute(f"UPDATE journaliste SET email = { repr(new_email) }, password = { repr(new_password) } WHERE id = ({ repr(identifiant[0]) })")
+                        cursor.execute(f"UPDATE journaliste SET email = { repr(new_email) }, password = { repr(generate_password_hash(new_password)) } WHERE id = ({ repr(identifiant[0]) })")
                         connexion.commit()
 
                     except:

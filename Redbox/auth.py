@@ -72,6 +72,7 @@ def demande_presse():
             password = request.form["password_inscription"]
             confirm_password = request.form["confirm_password"]
 
+            admin = 0
             creation_date = str(date.today())
 
             isInvalidForm = validateForm(prenom, nom, telephone, ville, email, password, confirm_password, cursor)
@@ -82,7 +83,7 @@ def demande_presse():
 
             else:
                 try:
-                    cursor.execute(f"INSERT INTO journaliste (prenom, nom, email, password, telephone, ville, date_creation) VALUES ({ repr(prenom) }, { repr(nom) }, { repr(email) }, { repr(password) }, { repr(telephone) }, { repr(ville) }, { repr(creation_date) });")
+                    cursor.execute(f"INSERT INTO journaliste (prenom, nom, email, password, admin, telephone, ville, date_creation) VALUES ({ repr(prenom) }, { repr(nom) }, { repr(email) }, { repr(password) },{ repr(admin) }, { repr(telephone) }, { repr(ville) }, { repr(creation_date) });")
                     connexion.commit()
 
                 except:

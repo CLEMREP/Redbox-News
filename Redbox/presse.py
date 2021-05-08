@@ -26,6 +26,9 @@ def home():
         if "email" in session:
             email = session["email"]
 
+            cursor.execute(f"SELECT admin FROM journaliste WHERE email = ( {repr(email)} );")   
+            admin = cursor.fetchone()
+
             cursor.execute(f"SELECT COUNT(id) FROM article")
             nbArticle = cursor.fetchone()
 
@@ -40,7 +43,7 @@ def home():
 
             connexion.commit()
 
-            return render_template("presse/index.html", pseudo=" ".join(pseudo), nbArticle=nbArticle[0], nbArticlePublie=nbArticlePublie[0])
+            return render_template("presse/index.html", pseudo = " ".join(pseudo), nbArticle = nbArticle[0], nbArticlePublie = nbArticlePublie[0], admin = admin[0])
 
         else:
             return redirect(url_for('authentification.acces_presse'))
@@ -53,6 +56,9 @@ def mes_articles():
             try:
                 connexion = sqlite3.connect(current_app.config["DATABASE"])
                 cursor = connexion.cursor()
+
+                cursor.execute(f"SELECT admin FROM journaliste WHERE email = ( {repr(email)} );")   
+                admin = cursor.fetchone()
 
                 cursor.execute(f"SELECT id FROM journaliste WHERE email = ({ repr(email) });")
                 identifiant = cursor.fetchone()
@@ -69,7 +75,7 @@ def mes_articles():
     else:
         return redirect(url_for('authentification.acces_presse'))
 
-    return render_template("presse/mes-articles.html", articles=articles)
+    return render_template("presse/mes-articles.html", articles = articles, admin = admin[0])
 
 @bp.route("/publier-article", methods=["POST", "GET"])
 def publier_articles():
@@ -84,6 +90,9 @@ def publier_articles():
         if "email" in session:
             email = session["email"]
 
+            cursor.execute(f"SELECT admin FROM journaliste WHERE email = ( {repr(email)} );")   
+            admin = cursor.fetchone()
+
             if request.method == 'POST':
                 titre = request.form["titre"]
                 texte = request.form["texte"]
@@ -94,7 +103,7 @@ def publier_articles():
 
                 if titre == "" or texte == "":
                     flash("Merci de remplir tous les champs.")
-                    return redirect(url_for('publier_articles'))
+                    return redirect(url_for('presse.publier_articles'))
 
                 else:
                     try:
@@ -104,12 +113,14 @@ def publier_articles():
 
                     except:
                         flash("Merci de mettre une image à l'article.")
-                        return redirect(url_for('publier_articles'))
+                        return redirect(url_for('presse.publier_articles'))
 
                 try:
                     cursor.execute(f"SELECT id FROM journaliste WHERE email = ({ repr(email) });")
                     identifiant = cursor.fetchone()
+
                     cursor.execute(f"INSERT INTO article (id_journaliste, titre, texte, lien, url, date_publication) VALUES ({ repr(identifiant[0]) }, { repr(titre) }, { repr(texte) }, { repr(lien_image) }, { repr(url) }, { repr(creation_date) } );")
+                    
                     connexion.commit()
 
                 except:
@@ -122,7 +133,7 @@ def publier_articles():
         else:
             return redirect(url_for('authentification.acces_presse'))
 
-    return render_template("presse/publier-article.html")
+    return render_template("presse/publier-article.html", admin = admin[0])
 
 @bp.route("/supprimer/<id>", methods=["POST", "GET"])
 def supprimer(id):
@@ -130,6 +141,7 @@ def supprimer(id):
         try:
             connexion = sqlite3.connect(current_app.config["DATABASE"])
             cursor = connexion.cursor()
+
             cursor.execute(f"DELETE FROM article WHERE id = { repr(id) }")
             connexion.commit()
 
@@ -148,6 +160,7 @@ def modifier_article(id):
     try:
         connexion = sqlite3.connect(current_app.config["DATABASE"])
         cursor = connexion.cursor()
+
         cursor.execute(f"SELECT id, titre, texte, lien FROM article WHERE id = { repr(id) };")
         infos_articles = cursor.fetchall()
 
@@ -157,6 +170,9 @@ def modifier_article(id):
     else:
         if "email" in session:
             email = session["email"]
+
+            cursor.execute(f"SELECT admin FROM journaliste WHERE email = ( {repr(email)} );")   
+            admin = cursor.fetchone()
 
             if request.method == "POST":
                 new_titre = request.form["new_titre"]
@@ -194,7 +210,7 @@ def modifier_article(id):
         else:
             return redirect(url_for('authentification.acces_presse'))
 
-    return render_template("presse/modifier-article.html", infos_articles = infos_articles)
+    return render_template("presse/modifier-article.html", infos_articles = infos_articles, admin = admin[0])
 
 @bp.route("/mon-compte", methods=["POST", "GET"])
 def mon_compte():
@@ -204,8 +220,13 @@ def mon_compte():
             try:
                 connexion = sqlite3.connect(current_app.config["DATABASE"])
                 cursor = connexion.cursor()
+
                 cursor.execute(f"SELECT * FROM journaliste WHERE email = ({ repr(email) });")
                 informations = cursor.fetchone()
+
+                cursor.execute(f"SELECT admin FROM journaliste WHERE email = ( {repr(email)} );")   
+                admin = cursor.fetchone()
+
                 connexion.commit()
 
             except:
@@ -221,7 +242,11 @@ def mon_compte():
                     try:
                         connexion = sqlite3.connect(current_app.config["DATABASE"])
                         cursor = connexion.cursor()
-                        cursor.execute(f"UPDATE journaliste SET email = { repr(new_email) }, password = { repr(new_password) }")
+
+                        cursor.execute(f"SELECT id FROM journaliste WHERE email = ({ repr(email) });")
+                        identifiant = cursor.fetchone()
+                        
+                        cursor.execute(f"UPDATE journaliste SET email = { repr(new_email) }, password = { repr(new_password) } WHERE id = ({ repr(identifiant[0]) })")
                         connexion.commit()
 
                     except:
@@ -235,7 +260,7 @@ def mon_compte():
     else:
         return redirect(url_for('authentification.acces_presse'))
 
-    return render_template("presse/mon-compte.html", informations=informations)
+    return render_template("presse/mon-compte.html", informations = informations, admin = admin[0])
 
 @bp.route("/logout")
 def logout():

@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Redbox - Publier un article</title>
+    <title>Redbox - Admin</title>
     <link rel="stylesheet" href="../../static/assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
     <link rel="stylesheet" href="../../static/assets/fonts/fontawesome-all.min.css">
@@ -18,13 +18,8 @@
         <div class="navigation">
             <a href="/"><img src="../../static/assets/img/Redbox_White.svg"></a>
             <ul>
-                <li><a href="/presse"><i class="icon-home icon"></i>Menu</a></li>
-                <li><a href="mes-articles"><i class="far fa-copy icon"></i>Mes articles</a></li>
-				<li class="active"><a href=""><i class="far fa-edit"></i>Publier un article</a></li>
-                {% if admin == 1 %}
-                <li><a href="{{ url_for('admin.admin') }}"><i class="fas fa-user-shield"></i>Gestion du site</a></li>
-                {% endif %}
-                <li><a href="mon-compte"><i class="fas fa-user-cog"></i>Mon compte</a></li>
+                <li><a href="/admin"><i class="far fa-copy icon"></i>Journalistes</a></li>
+                <li><a href="/admin/articles.html"><i class="far fa-copy icon"></i>Articles</a></li>
             </ul>
             <div class="footer-logout">
                 <a href="/logout"><i class="fas fa-sign-out-alt"></i>Déconnexion</a>
@@ -34,7 +29,7 @@
 		<div class="publier-article">
 			<div class="contain-publier">
                 <section>
-                    <h1>Publier un article</h1>
+                    <h1>Modifier un article</h1>
                     {% with messages = get_flashed_messages() %}
                             {% if messages %}
                                 <ul class="flash_message">
@@ -44,14 +39,16 @@
                                 </ul>
                             {% endif %}
                     {% endwith %}
+                    {% for info in infos_articles %}
                     <form method="POST" enctype="multipart/form-data">
-                        <input type="text" name="titre" placeholder="Titre de l'article">
-                        <textarea name="texte" placeholder="Contenu de l'article"></textarea>
+                        <input type="text" value="{{ info[1] }}" name="new_titre" placeholder="Titre de l'article">
+                        <textarea type="text" name="new_texte" placeholder="Contenu de l'article">{{ info[2] }}</textarea>
                         <label for="fileUpload">Image de l'article</label>
-                        <input type="file" name="file" id="fileUpload">
+                        <input type="file" name="new_file" id="fileUpload">
 
-                        <button type="submit" id="Modifier" class="bouton">Publier</button>
+                        <button type="submit" id="Modifier" class="bouton">Modifier mon article</button>
                     </form>
+                    {% endfor %}
                 </section>
 			</div>
 		</div>

@@ -21,6 +21,9 @@
                 <li class="active"><a href=""><i class="icon-home icon"></i>Menu</a></li>
                 <li><a href="mes-articles"><i class="far fa-copy icon"></i>Mes articles</a></li>
 				<li><a href="publier-article"><i class="far fa-edit"></i>Publier un article</a></li>
+                {% if admin == 1 %}
+                <li><a href="{{ url_for('admin.admin') }}"><i class="fas fa-user-shield"></i>Gestion du site</a></li>
+                {% endif %}
                 <li><a href="mon-compte"><i class="fas fa-user-cog"></i>Mon compte</a></li>
             </ul>
             <div class="footer-logout">

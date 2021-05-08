@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Redbox - Admin</title>
+    <link rel="stylesheet" href="../../static/assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+    <link rel="stylesheet" href="../../static/assets/fonts/fontawesome-all.min.css">
+    <link rel="stylesheet" href="../../static/assets/fonts/simple-line-icons.min.css">
+    <link rel="stylesheet" href="../../static/css/styles_presse.css">
+    <link rel="icon" href="../../static/assets/img/favicon_dark.ico" />
+</head>
+
+<body>
+    <div class="main-box">
+        <div class="navigation">
+            <a href="/"><img src="../../static/assets/img/Redbox_White.svg"></a>
+            <ul>
+                <li><a href="/admin"><i class="far fa-copy icon"></i>Journalistes</a></li>
+                <li><a href="/admin/articles.html"><i class="far fa-copy icon"></i>Articles</a></li>
+            </ul>
+            <div class="footer-logout">
+                <a href="/logout"><i class="fas fa-sign-out-alt"></i>Déconnexion</a>
+                <p>Copyright © 2021 Redbox-News.com.</p> 
+            </div>
+        </div>
+		<div class="col-md-6 col-xxl-9">
+            <div class="presse">
+                <section>
+                    <h1>Accès Presse</h1>
+                    {% with messages = get_flashed_messages() %}
+                        {% if messages %}
+                            <ul class="flash_message">
+                            {% for message in messages %}
+                                <li>{{ message }}</li>
+                            {% endfor %}
+                            </ul>
+                        {% endif %}
+                    {% endwith %}
+                    {% for info in infos_journaliste %}
+                    <form method="POST">
+                        <input type="text" value="{{ info[1] }}" name="nom" placeholder="Nom">
+                        <input type="text" value="{{ info[0] }}" name="prenom" placeholder="Prénom">
+                        <input type="tel" value="{{ info[5] }}" name="telephone" placeholder="Téléphone">
+                        <input type="text" value="{{ info[6] }}" name="ville" placeholder="Ville">
+                        <input type="text" value="{{ info[4] }}" name="admin" placeholder="Admin">
+                        <input type="email" value="{{ info[2] }}" name="email" placeholder="Courriel électronique">
+                        <input type="password" value="{{ info[3] }}" name="password" placeholder="Mot de passe">
+
+                        <button type="submit" class="bouton">Modifier</button>
+                    </form>
+                    {% endfor %}
+                </section>
+            </div>
+        </div>
+    </div>
+    <script src="../../static/assets/bootstrap/js/bootstrap.min.js"></script>
+</body>
+
+</html>

@@ -8,6 +8,7 @@ python -m pip install -r requirements.txt
 Open cmd in folder:
 
 SET FLASK_APP=.
+
 SET FLASK_ENV=development
 
 python -m flask run

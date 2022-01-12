@@ -12,3 +12,6 @@ SET FLASK_APP=.
 SET FLASK_ENV=development
 
 python -m flask run
+
+
+DEMO ON : https://redbox.clement-repel.fr (Responsive is not working)
